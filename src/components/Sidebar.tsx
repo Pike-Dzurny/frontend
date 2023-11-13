@@ -5,10 +5,11 @@ import { useState } from 'react';
 
 import clsx from 'clsx';
 import { SidebarButton } from './SidebarButtons'; // Import SidebarButton component
+import { usePathname } from 'next/navigation'
 
 
 export const Sidebar: React.FC = () => {
-
+  const pathname = usePathname()
   const [currentPage, setCurrentPage] = useState('Settings');
 
   return (
@@ -18,14 +19,14 @@ export const Sidebar: React.FC = () => {
     "fixed top-1/2 transform -translate-y-1/2 translate-x-1/2 w-1/5 h-1/2 p-8 overflow-auto rounded shadow-lg hover:sha transition-colors border flex flex-col justify-between border-base-300 bg-base-200"
       )}>
     <div className="flex flex-col justify-between space-y-4 text-lg">
-      <SidebarButton icon="home" name="Home" path="/" selected={currentPage === 'Home'} />
-      <SidebarButton icon="mail" name="Messages" path="/messages" selected={currentPage === 'Messages'} />
-      <SidebarButton icon="person" name="Profile" path="/profile" selected={currentPage === 'Profile'} />
-      <SidebarButton icon="local_fire_department" path="/trending" name="Trending" selected={currentPage === 'Trending'} />
+      <SidebarButton icon="home" name="Home" path="/" selected={pathname === '/'} />
+      <SidebarButton icon="mail" name="Messages" path="/messages" selected={pathname === '/messages'} />
+      <SidebarButton icon="person" name="Profile" path="/profile" selected={pathname === '/profile'} />
+      <SidebarButton icon="local_fire_department" path="/trending" name="Trending" selected={pathname === 'Trending'} />
     </div>
       <div className="mt-auto">
         <hr className="border-neutral mb-4" />
-        <SidebarButton icon="settings" name="Settings" path="/settings" selected={currentPage === 'Settings'} />
+        <SidebarButton icon="settings" name="Settings" path="/settings" selected={pathname === '/settings'} />
       </div>
     </div>
 </>

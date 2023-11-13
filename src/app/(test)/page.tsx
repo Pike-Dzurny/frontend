@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+
+import React, { useEffect } from 'react';
 import { PFP } from '../../components/pfp';
 
 import { QueryClient, useInfiniteQuery } from 'react-query';
@@ -48,7 +49,6 @@ export default function Home() {
 
   useEffect(() => {
     if(entry?.isIntersecting) {
-      console.log("fetching next page")
       fetchNextPage()
     }
   }, [entry, fetchNextPage]);
@@ -86,14 +86,11 @@ let real_post: any;
                 
                 real_post = {id: id, title: title, body: body, author: author};
 
-              console.log(author);
                 
                 if(i === _posts.length-1) {
-                  console.log("last post")
-                  console.log(post)
+
                   return <div className="h-100 mb-4" ref={ref} key={post.id}><RealPost post={real_post} /> </div>
                 }
-                console.log(`not last, ${i} and ${_posts.length}`);
                 return ( 
                 <div className="h-100 mb-4" key={post.id}><RealPost post={real_post} /></div>)
               })}
@@ -114,3 +111,4 @@ let real_post: any;
     </div>
   );
 }
+

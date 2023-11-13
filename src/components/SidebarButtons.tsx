@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useContext } from 'react';
 
 type SidebarButtonProps = {
   icon: string;
