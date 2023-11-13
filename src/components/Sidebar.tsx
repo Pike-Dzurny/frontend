@@ -1,0 +1,33 @@
+"use client";
+
+import React, { useContext } from 'react';
+import { useState } from 'react';
+
+import clsx from 'clsx';
+import { SidebarButton } from './SidebarButtons'; // Import SidebarButton component
+
+
+export const Sidebar: React.FC = () => {
+
+  const [currentPage, setCurrentPage] = useState('Settings');
+
+  return (
+    <>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <div className={clsx(
+    "fixed top-1/2 transform -translate-y-1/2 translate-x-1/2 w-1/5 h-1/2 p-8 overflow-auto rounded shadow-lg hover:sha transition-colors border flex flex-col justify-between border-base-300 bg-base-200"
+      )}>
+    <div className="flex flex-col justify-between space-y-4 text-lg">
+      <SidebarButton icon="home" name="Home" path="/" selected={currentPage === 'Home'} />
+      <SidebarButton icon="mail" name="Messages" path="/messages" selected={currentPage === 'Messages'} />
+      <SidebarButton icon="person" name="Profile" path="/profile" selected={currentPage === 'Profile'} />
+      <SidebarButton icon="local_fire_department" path="/trending" name="Trending" selected={currentPage === 'Trending'} />
+    </div>
+      <div className="mt-auto">
+        <hr className="border-neutral mb-4" />
+        <SidebarButton icon="settings" name="Settings" path="/settings" selected={currentPage === 'Settings'} />
+      </div>
+    </div>
+</>
+  );
+};
