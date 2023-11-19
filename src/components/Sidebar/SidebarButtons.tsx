@@ -11,7 +11,7 @@ export const SidebarButton = ({ icon, name, path = '/', selected }: SidebarButto
 
   return (
     <Link href={path} passHref>
-      <div className={'flex items-center mb-4 rounded p-2 transition-colors hover:bg-base-100'}>
+      <div className={'flex items-center mb-4 rounded p-2 transition-colors hover:bg-slate-100'}>
         <span className="material-symbols-sharp" style={selected ? {fontVariationSettings: "'FILL' 1, 'wght' 500, 'GRAD' -25, 'opsz' 48"} : {}}>
           {icon}
         </span>

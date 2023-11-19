@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { themeChange } from 'theme-change'
 
+import { Dropdown } from '../../../components/Dropdown/Dropdown';
+import { PFP } from '../../../components/pfp';
 
 
 const AboutPage = () => {
@@ -14,38 +16,22 @@ const AboutPage = () => {
   
 
   return (
-    <div className="flex pt-16">
-    {/*<div className="flex flex-col flex-1 items-start justify-center align">
-      <Sidebar />
-    </div> */}
-    <div className="flex flex-col flex-1 items-start justify-center align">
-    </div>
-    <div className="flex min-h-screen flex-col flex-1 items-center justify-between p-8 mx-auto z-0 overflow-auto">
-      <main className="w-full">
-
-        <div className="flex items-center justify-center w-full">
+    <div className='w-full'>
+    <div className="relative rounded-t-2xl">
+    <div className="absolute inset-0 z-0 rounded-2xl" style={{backgroundImage: "url('/../static/trees.jpg')", backgroundSize: 'cover'}}></div>
+    <div className="flex pl-4 pr-4 pb-16 pt-16 justify-center rounded-t-2xl backdrop-blur-xl z-10">
+      <div className="relative flex flex-col justify-center items-center bg-sky-50 border border-sky-200 backdrop-blur-xl p-20 rounded-3xl w-5/6">  
+        <div className='absolute -left-4 transform hover:scale-110 transition-transform'>
+          <PFP/>
         </div>
-        
-        <div className={clsx(
-          "fixed top-1/2 transform -translate-y-1/2 w-1/2 h-2/3 p-8 overflow-auto rounded shadow-lg hover:sha transition-colors border flex flex-col justify-between bg-base-200 border-base-100 shadow-lg"
-        )}>
-          <div className="relative inline-flex items-center cursor-pointer">
-            <select data-choose-theme>
-              <option value="">Default</option>
-              <option value="dark">Dark</option>
-              <option value="retro">Retro</option>
-              <option value="black">Retro</option>
-              <option value="light">Light</option>
-
-            </select>
-          </div>
-        </div>
-      </main>
-    </div>
-    <div className="flex flex-col flex-1 items-center">
-      { }
+        <button className="absolute -bottom-4 -right-4 bg-blue-500 border-blue-300 hover:bg-blue-400 hover:shadow-sm shadow-lg  text-white rounded-full py-4 px-6 text-2xl">+</button>
+      </div>
     </div>
   </div>
+            <div className='backdrop-blur-sm border-slate-300 border-b border-t sticky top-0 z-10'>
+              <Dropdown />
+            </div>
+    </div>
   );
 };
 

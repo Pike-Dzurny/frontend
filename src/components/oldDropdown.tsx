@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState, useContext } from 'react';
-import { ThemeContext } from './ThemeContext';
 import clsx from 'clsx';
 
 
 export const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const handleLogout = () => {
     // Handle logout logic here

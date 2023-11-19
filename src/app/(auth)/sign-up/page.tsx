@@ -23,7 +23,7 @@ const MyPage = () => {
     <div className="flex items-center justify-center w-full">
       {/* Other elements... */}
       <div className={clsx(
-        "fixed top-1/2 transform -translate-y-1/2 w-1/2 h-2/3 p-8 overflow-auto rounded shadow-lg hover:sha transition-colors border flex flex-col justify-between bg-base-200 border-base-100 shadow-lg"
+        "fixed top-1/2 transform -translate-y-1/2 w-1/2 h-2/3 p-8 overflow-auto rounded shadow-lg hover:sha border flex flex-col justify-between bg-base-200 border-base-100"
       )}>
         {/* Other elements... */}
         <button onClick={handleConfirmClick}>Confirm</button>
