@@ -1,38 +1,60 @@
 "use client";
-import React, { useEffect } from 'react';
-import clsx from 'clsx';
-import { themeChange } from 'theme-change'
 
-import { Dropdown } from '../../../components/Dropdown/Dropdown';
-import { PFP } from '../../../components/pfp';
+import React from 'react';
+import { useInfiniteQuery } from 'react-query';
+import axios from 'axios';
+import { RealPost } from '../../../components/Post/RealPost'; // Import RealPost component
 
 
-const AboutPage = () => {
+const fetchPosts = async ({ pageParam = null }) => {
+  const url = pageParam ? `http://localhost:8000/posts?page=1&per_page=6&id=${pageParam}` : 'http://localhost:8000/posts?page=1&per_page=6';
+  const response = await axios.get(url);
+  return response.data;
+};
 
-  useEffect(() => {
-    themeChange(false)
-    // 👆 false parameter is required for react project
-  }, [])
+type Post = {
+  post_content: string;
+  date_of_post: string;
+  liked_by: number[];
+  poster_uid: number;
+  id: number;
+  title: string;
+  content: string;
+  body: string;
+  author: string;
+};
+
+const Posts = () => {
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery('posts', fetchPosts, {
+    getNextPageParam: (lastPage, pages) => {
+      return lastPage.LastEvaluatedKey?.id;
+    },
+  });
   
+  console.log(data);
 
   return (
-    <div className='w-full'>
-    <div className="relative rounded-t-2xl">
-    <div className="absolute inset-0 z-0 rounded-2xl" style={{backgroundImage: "url('/../static/trees.jpg')", backgroundSize: 'cover'}}></div>
-    <div className="flex pl-4 pr-4 pb-16 pt-16 justify-center rounded-t-2xl backdrop-blur-xl z-10">
-      <div className="relative flex flex-col justify-center items-center bg-sky-50 border border-sky-200 backdrop-blur-xl p-20 rounded-3xl w-5/6">  
-        <div className='absolute -left-4 transform hover:scale-110 transition-transform'>
-          <PFP/>
-        </div>
-        <button className="absolute -bottom-4 -right-4 bg-blue-500 border-blue-300 hover:bg-blue-400 hover:shadow-sm shadow-lg  text-white rounded-full py-4 px-6 text-2xl">+</button>
-      </div>
-    </div>
+    <div>
+    {data?.pages.map((group, i) => (
+      <React.Fragment key={i}>
+        {group.Items.map((post: Post) => (
+          <div className="h-100 mb-4" key={post.id}>
+            <RealPost post={post} />
+          </div>
+        ))}
+      </React.Fragment>
+    ))}
+    <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
+      {isFetchingNextPage ? 'Loading more...' : hasNextPage ? 'Load More' : 'Nothing more to load'}
+    </button>
   </div>
-            <div className='backdrop-blur-sm border-slate-300 border-b border-t sticky top-0 z-10'>
-              <Dropdown />
-            </div>
-    </div>
   );
 };
 
-export default AboutPage;
+export default Posts;

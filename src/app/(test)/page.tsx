@@ -11,16 +11,18 @@ import { RealPost } from '../../components/Post/RealPost'; // Import RealPost at
 import backgroundImage from '../../static/backgroundpattern.png';
 import Image from 'next/image'
 
+import axios from 'axios';
+
 import { Dropdown } from '../../components/Dropdown/Dropdown';
 
-const fetchPost = async (page: number) => {
-  const response = await fetch(`http://127.0.0.1:8000/getfeed?page=${page}&size=1`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  const data = await response.json();
-  const items = data.items;
-  return data;
+import { QueryFunctionContext } from 'react-query';
+
+const fetchPosts = async ({ pageParam = 1 }: QueryFunctionContext<'posts', number>) => {
+  const url = `http://localhost:8000/posts?page=${pageParam}&per_page=6`;
+  console.log(url); // Log the URL to the console
+  const response = await axios.get(url);
+  
+  return response.data;
 };
 
 
@@ -29,21 +31,14 @@ export default function Home() {
 
 
   const queryClient = new QueryClient();
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-      ['query'],
-      async ({ pageParam = 1 }) => {
-        const response = await fetchPost(pageParam);
-        return response;
-      },
-      {
-        getNextPageParam: (lastPage, pages) => {
-          if (lastPage.page < lastPage.pages) {
-            return lastPage.page + 1;
-          }
-          return false;
-        },
-      }
-  );
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery('posts', fetchPosts, {
+    getNextPageParam: (lastPage, allPages) => allPages.length + 1,
+    });
   const lastPostRef = React.useRef<HTMLDivElement>(null)
 
   const {ref, entry} = useIntersection({
@@ -73,12 +68,14 @@ export default function Home() {
   }, []);
 
 
-let items: any;
-let author: string;
-let body: string;
-let title: string;
-let id: number;
-let real_post: any;
+  type Post = {
+    user_poster_id: number;
+    content: string;
+    date_of_post: string;
+    id: number;
+  };
+  
+  
 
   return (
     <div>
@@ -105,24 +102,24 @@ let real_post: any;
 
             <div className='p-8 flex-col-reverse overflow-auto'>
 
-                {_posts?.map((post, i) => {
-                  items = post.items[0];
+            {data?.pages.map((page, i) => (
+                <React.Fragment key={i}>
+                  {page.map((post: Post, index: number) => {
+                    const postElement = (
+                      <div className="h-100 mb-4" key={post.id}>
+                        <RealPost post={post} />
+                      </div>
+                    );
 
-                  author = items.author;
-                  body = items.body;
-                  title = items.title;
-                  id = items.id;
-                  
-                  real_post = {id: id, title: title, body: body, author: author};
+                    // If it's the last post of the last page, attach the ref for intersection observer
+                    if (i === data.pages.length - 1 && index === page.length - 1) {
+                      return <div ref={ref}>{postElement}</div>;
+                    }
 
-                  
-                  if(i === _posts.length-1) {
-
-                    return <div className="h-100 mb-4" ref={ref} key={post.id}><RealPost post={real_post} /> </div>
-                  }
-                  return ( 
-                  <div className="h-100 mb-4" key={post.id}><RealPost post={real_post} /></div>)
-                })}
+                    return postElement;
+                  })}
+                </React.Fragment>
+              ))}
               <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
                 {
                   isFetchingNextPage

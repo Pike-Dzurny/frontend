@@ -3,12 +3,13 @@
 import React, { useContext } from 'react';
 import clsx from 'clsx';
 
-interface Post {
+type Post = {
+  user_poster_id: number;
+  content: string;
+  date_of_post: string;
   id: number;
-  title: string;
-  body: string;
-  author: string;
-}
+};
+
 
 interface RealPostProps {
   post: Post;
@@ -17,8 +18,8 @@ interface RealPostProps {
 
 export const RealPost: React.FC<RealPostProps> = ({ post, className }) => {
   let paddingClass = 'pr-4 pb-4 pl-2';
-  if (post.body.length > 50) paddingClass = 'pr-4 pb-4 pl-2';
-  if (post.body.length > 100) paddingClass = 'pr-4 pb-6 pl-2';
+  if (post.content.length > 50) paddingClass = 'pr-4 pb-4 pl-2';
+  if (post.content.length > 100) paddingClass = 'pr-4 pb-6 pl-2';
 
   return (
     <div>
@@ -31,11 +32,11 @@ export const RealPost: React.FC<RealPostProps> = ({ post, className }) => {
         <div className="flex flex-col justify-between overflow-hidden">
           <div>
             <div className='flex flex-row justify-between'>
-              <div className="font-medium">{post.author}</div>
-              <div className="ml-2 text-right font-light font-mono">aaaaaaa</div>
+              <div className="font-medium">{post.user_poster_id}</div>
+              <div className="ml-2 text-right font-light font-mono">{post.date_of_post}</div>
             </div>
             <div className="overflow-hidden overflow-wrap break-words pb-2">
-              <p className="hyphens-auto">{post.body}</p>
+              <p className="hyphens-auto">{post.content}</p>
             </div>
           </div>
         </div>
