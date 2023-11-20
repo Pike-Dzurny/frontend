@@ -10,6 +10,22 @@
 }
 
 
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-circle {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 90%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1.045s ease-in-out infinite;
+  
+}
+
 body {
   transition: all 0.05s ease;
 

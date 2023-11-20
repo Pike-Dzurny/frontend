@@ -62,12 +62,18 @@ const AboutPage = () => {
   }, []);
 
 
-  type Post = {
+  interface User {
+    id: number;
+    account_name: string;
+  }
+  
+  interface Post {
     user_poster_id: number;
     content: string;
     date_of_post: string;
     id: number;
-  };
+    user: User;
+  }
   
   
 
@@ -110,9 +116,9 @@ const AboutPage = () => {
               <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
                 {
                   isFetchingNextPage
-                  ? 'Loading more...'
+                  ? <div className="loading-circle justify-center"></div>
                   : (data?.pages.length ?? 0) < 6
-                  ? 'Load More'
+                  ? <div className="loading-circle"></div>
                   : 'Nothing more to load'
                 }
               </button>

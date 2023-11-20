@@ -8,8 +8,7 @@ import { QueryClient, useInfiniteQuery } from 'react-query';
 import { useIntersection } from '@mantine/hooks';
 import { RealPost } from '../../components/Post/RealPost'; // Import RealPost at the top of your file
 
-import backgroundImage from '../../static/backgroundpattern.png';
-import Image from 'next/image'
+
 
 import axios from 'axios';
 
@@ -68,12 +67,18 @@ export default function Home() {
   }, []);
 
 
-  type Post = {
+  interface User {
+    id: number;
+    account_name: string;
+  }
+  
+  interface Post {
     user_poster_id: number;
     content: string;
     date_of_post: string;
     id: number;
-  };
+    user: User;
+  }
   
   
 
@@ -100,13 +105,13 @@ export default function Home() {
               <Dropdown />
             </div>
 
-            <div className='p-8 flex-col-reverse overflow-auto'>
+            <div className='flex-col-reverse'>
 
             {data?.pages.map((page, i) => (
                 <React.Fragment key={i}>
                   {page.map((post: Post, index: number) => {
                     const postElement = (
-                      <div className="h-100 mb-4" key={post.id}>
+                      <div className="h-100" key={post.id}>
                         <RealPost post={post} />
                       </div>
                     );
@@ -120,12 +125,12 @@ export default function Home() {
                   })}
                 </React.Fragment>
               ))}
-              <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+              <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className="flex justify-center items-center w-full">
                 {
                   isFetchingNextPage
-                  ? 'Loading more...'
+                  ? <div className="loading-circle justify-center align-middle"></div>
                   : (data?.pages.length ?? 0) < 6
-                  ? 'Load More'
+                  ? <div className="loading-circle justify-center"></div>
                   : 'Nothing more to load'
                 }
               </button>
