@@ -2,14 +2,12 @@
 
 import React, { useContext } from 'react';
 import clsx from 'clsx';
-import { ThemeContext } from './ThemeContext';
 
 interface SkeletonPostProps {
   className?: string;
 }
 
 export const SkeletonPost: React.FC<SkeletonPostProps> = ({ className }) => {
-  const { theme } = useContext(ThemeContext);
 
   return (
     <div className={clsx("p-16 rounded-lg flex items-start space-x-4 animate-pulse flex-grow", className, {

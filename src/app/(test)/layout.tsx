@@ -4,6 +4,7 @@ import { Roboto } from 'next/font/google'
 import './../globals.css'
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 
+import AuthProvider from '../../components/AuthProvider';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -21,6 +22,7 @@ function RootLayout({
 
     <QueryClientProvider client={queryClient}>
     <html lang="en">
+      <AuthProvider>
         <body className={`${font.className} antialiased bg-gradient-to-br from-sky-50 to-cyan-100` }>
           <div className="grid grid-cols-3">
             <div className="col-span-1">
@@ -36,6 +38,7 @@ function RootLayout({
             </div>
           </div>
         </body>
+        </AuthProvider>
     </html>
     </QueryClientProvider>
 
