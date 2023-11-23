@@ -41,15 +41,6 @@ const Posts = () => {
 
   return (
     <div>
-    {data?.pages.map((group, i) => (
-      <React.Fragment key={i}>
-        {group.Items.map((post: Post) => (
-          <div className="h-100 mb-4" key={post.id}>
-            <RealPost post={post} />
-          </div>
-        ))}
-      </React.Fragment>
-    ))}
     <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
       {isFetchingNextPage ? 'Loading more...' : hasNextPage ? 'Load More' : 'Nothing more to load'}
     </button>
