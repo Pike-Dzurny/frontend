@@ -15,7 +15,7 @@ export const handleSignUp = async (username: string, password: string, email: st
   });
 
   // Send the username, hashed password, iterations, salt, email, and profile picture to the FastAPI server
-  const response = await fetch('http://localhost:8000/signup', {
+  const response = await fetch(`http://localhost:8000/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({account_name: username, display_name: username, email, password_hash: hashedPassword, iterations, salt}),
@@ -23,11 +23,9 @@ export const handleSignUp = async (username: string, password: string, email: st
 
   // Handle the response from the server
   if (response.ok) {
-    console.log('Sign-up was successful');
-    return true;
+    return { message: 'Sign-up was successful' };
   } else {
-    console.log('Sign-up failed');
-    console.log(await response.json()); // Log the server's response
-    return false;
+    const data = await response.json();
+    return { message: data.message };
   }
 };
