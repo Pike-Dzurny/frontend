@@ -2,6 +2,8 @@ import type { NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import NextAuth from 'next-auth';
+
 import axios from 'axios';
 
 //     signOut: '/signout',
@@ -43,12 +45,22 @@ export const options: NextAuthOptions = {
       }
     })
   ],
+  callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      if (url === '/signin' || url === '/signup' || url === '/api/auth/signin' || url === '/api/auth/signup') {
+        // If the user is being redirected to the sign-in page, don't include the callbackUrl parameter
+        return baseUrl;
+      }
+      return url;
+    },
+  },
   pages: {
     signIn: '/signin',
     error: '/error', 
     verifyRequest: '/verify-request', 
     newUser: '/signup' 
   }
+  
 
 };
 

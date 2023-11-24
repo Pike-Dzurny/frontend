@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import { useRouter } from 'next/navigation'
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { replace } from 'lodash';
+
 
 
 
@@ -13,16 +13,20 @@ export default function SignIn() {
 
 
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter()
+    const router = useRouter();
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const username = formData.get('username');
         const password = formData.get('password');
+
+
     
         if (username && password) {
             const result = await signIn('credentials', { redirect: false, username, password });
+            console.log(result);
             if (result?.ok && result.url) {
                 console.log(`Result_URL: ${result.url} | Result_OK: ${result.ok} | Result: ${result}`);
                 router.push('/');
