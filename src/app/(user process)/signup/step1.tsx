@@ -3,6 +3,10 @@
 import React, { useState, useEffect, useCallback, FC } from 'react';
 import { handleSignUp } from '../../api/auth/[...nextauth]/handleSignUp';
 import debounce from 'lodash.debounce';
+import { signIn }  from 'next-auth/react';
+import Link from 'next/link';
+
+
 
 
 interface Step1Props {
@@ -111,14 +115,25 @@ const Step1: FC<Step1Props> = ({ nextStep }) => {
     
         setMessage(success.message ? 'Sign-up was successful' : 'Sign-up failed');
         if(success.message){
-          //nextStep();
+          console.log(success);
+          console.log(`Email: ${email}, Password: ${password}`)
+          signIn('credentials', {
+            callbackUrl: '/',
+            redirect: true,
+            email: email,
+            password: password
+          });
+        }
+        else{
+          console.log(success);
         }
       }
     };
   
       return (
         <>
-          <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="rounded-lg shadow p-6 max-w-md mx-auto bg-white">
+          <div className="flex min-h-full flex-col justify-center px-6 py-2 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign up for an account</h2>
             </div>
@@ -139,7 +154,8 @@ const Step1: FC<Step1Props> = ({ nextStep }) => {
               name="username" 
               type="text"
               autoCorrect="off" 
-              required 
+              required
+              autoComplete="current-password" 
               className={`p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${isUsernameInputEmpty ? 'ring-gray-300' : (isChecking ? 'ring-yellow-500' : (usernameAvailable ? 'ring-green-500' : 'ring-red-500'))} focus:outline-none placeholder:text-gray-400 sm:text-sm sm:leading-6`} 
               value={username} 
               onChange={(e) => setUsername(e.target.value)}
@@ -206,8 +222,17 @@ const Step1: FC<Step1Props> = ({ nextStep }) => {
       
             <p className="mt-10 text-center text-sm text-gray-500">{message}</p>
             </div>
-      </div>
+            
 
+      </div>
+      
+    </div>
+    <div className="mt-2 shadow p-5 border-gray-300 rounded-md bg-white flex flex-col items-center w-full">
+    <p className="mb-4">Already have an account?</p>
+    <Link href="/signin" className='w-full px-6 lg:px-8'>
+        <div className="w-full p-2 bg-green-500 text-white text-center rounded-md">Sign In</div>
+    </Link>
+</div>
   </>
         
       );

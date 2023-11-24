@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import axios from 'axios';
 
-
+//     signOut: '/signout',
 export const options: NextAuthOptions = {
   providers: [
     GitHubProvider({
@@ -43,6 +43,12 @@ export const options: NextAuthOptions = {
       }
     })
   ],
+  pages: {
+    signIn: '/signin',
+    error: '/error', 
+    verifyRequest: '/verify-request', 
+    newUser: '/signup' 
+  }
 
 };
 

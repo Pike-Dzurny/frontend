@@ -15,15 +15,11 @@ function RootLayout({
   return (
 
     <html lang="en">
-      <AuthProvider>
         <body className={`${font.className} antialiased bg-gradient-to-br from-sky-50 to-cyan-100 min-h-screen` }>
         <div className="flex items-center justify-center min-h-screen">
-        <div className="rounded-lg shadow p-6 max-w-md mx-auto bg-white">
                   {children}
         </div>
-        </div>
         </body>
-        </AuthProvider>
     </html>
 
   )

@@ -11,7 +11,7 @@ export default function Signup() {
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => {
-    setCurrentStep(currentStep + 1);
+    //setCurrentStep(currentStep + 1);
   };
 
   const prevStep = () => {
@@ -21,11 +21,14 @@ export default function Signup() {
   return (
     <div>
     {currentStep === 1 && <Step1 nextStep={nextStep} />}
-    {currentStep === 2 && <Step2 nextStep={nextStep} prevStep={prevStep} />}
-    {currentStep === 3 && <Step3 prevStep={prevStep} />}
-    <div className="w-full bg-gray-200 rounded-full h-1.5 ">
-      <div className="bg-sky-600 h-2.5 rounded-full transition-all duration-500" style={{width: `${(currentStep / 3) * 100}%`}}></div>
-    </div>
+    {//currentStep === 2 && <Step2 nextStep={nextStep} prevStep={prevStep} />
+    }
+    {//currentStep === 3 && <Step3 prevStep={prevStep} />
+    }
+ {//   <div className="w-full bg-gray-200 rounded-full h-1.5 ">
+  //    <div className="bg-sky-600 h-2.5 rounded-full transition-all duration-500" style={{width: `${(currentStep / 3) * 100}%`}}></div>
+   // </div>
+  }
   </div>
   );
 }
