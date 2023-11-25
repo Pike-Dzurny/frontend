@@ -13,7 +13,15 @@ export default function SignIn() {
 
 
     const [error, setError] = useState<string | null>(null);
+    const { data: session, status } = useSession();
     const router = useRouter();
+
+    useEffect(() => {
+        if (status === 'loading') return; // Do nothing while loading
+        if (session?.user) {
+          router.push('/'); // Redirect to home page if already signed in
+        }
+      }, [session, router, status]);
 
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,7 +45,7 @@ export default function SignIn() {
             setError('Username and password are required.');
           }
       };
-  
+    if(status === 'unauthenticated') {
     return (
     <div className="flex flex-col md:flex-row items-center justify-center min-h-screen py-2">
       <div className="hidden md:block md:w-2/3">
@@ -66,4 +74,5 @@ export default function SignIn() {
       </div>
     </div>
   );
+    }
 }

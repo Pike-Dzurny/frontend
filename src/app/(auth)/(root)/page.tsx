@@ -2,17 +2,17 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { PFP } from '../../components/pfp';
+import { PFP } from '../../../components/pfp';
 
 import { QueryClient, useInfiniteQuery } from 'react-query';
 import { useIntersection } from '@mantine/hooks';
-import { RealPost } from '../../components/Post/RealPost'; // Import RealPost at the top of your file
+import { RealPost } from '../../../components/Post/RealPost'; // Import RealPost at the top of your file
 
 
 
 import axios from 'axios';
 
-import { Dropdown } from '../../components/Dropdown/Dropdown';
+import { Dropdown } from '../../../components/Dropdown/Dropdown';
 
 import { QueryFunctionContext } from 'react-query';
 

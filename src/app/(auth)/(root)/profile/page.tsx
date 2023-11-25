@@ -1,13 +1,13 @@
 "use client";
 
-import { Dropdown } from '../../../components/Dropdown/Dropdown';
-import { PFP } from '../../../components/pfp';
+import { Dropdown } from '../../../../components/Dropdown/Dropdown';
+import { PFP } from '../../../../components/pfp';
 
 import React, { useEffect, useState } from 'react';
 
 import { QueryClient, useInfiniteQuery } from 'react-query';
 import { useIntersection } from '@mantine/hooks';
-import { RealPost } from '../../../components/Post/RealPost'; // Import RealPost at the top of your file
+import { RealPost } from '../../../../components/Post/RealPost'; // Import RealPost at the top of your file
 
 import axios from 'axios';
 
