@@ -18,7 +18,6 @@ import { QueryFunctionContext } from 'react-query';
 
 const fetchPosts = async ({ pageParam = 1 }: QueryFunctionContext<'posts', number>) => {
   const url = `http://localhost:8000/posts?page=${pageParam}&per_page=6`;
-  console.log(url); // Log the URL to the console
   const response = await axios.get(url);
   
   return response.data;

@@ -61,7 +61,6 @@ export const RealPost: React.FC<RealPostProps> = ({ post, className }) => {
   }
 
   function formatLikesCount(count: number) {
-    console.log(count);
     if (count === 0) {
       return '';
     } else if (count <= 999) {
